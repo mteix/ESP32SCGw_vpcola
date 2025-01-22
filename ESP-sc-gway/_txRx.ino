@@ -55,8 +55,11 @@ int sendPacket(uint8_t *buf, uint8_t length)
 	//		CFList (fill to 16 bytes)
 			
 	int i=0;
-	StaticJsonBuffer<312> jsonBuffer;
-	char * bufPtr = (char *) (buf);
+	// StaticJsonBuffer<312> jsonBuffer;  // Original
+	// StaticJsonDocument<312> jsonBuffer; // MJT:Upgraded to JSON6 
+  JsonDocument jsonBuffer; // MJT:Upgraded to JSON7 
+
+  char * bufPtr = (char *) (buf);
 	buf[length] = 0;
 	
 #if DUSB>=1

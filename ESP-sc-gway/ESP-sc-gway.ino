@@ -54,7 +54,7 @@
 #include <pins_arduino.h>
 #include <ArduinoJson.h>
 #include <SimpleTimer.h>
-#include <gBase64.h>							// https://github.com/adamvr/arduino-base64 (changed the name)
+#include <Base64.h>							// https://github.com/adamvr/arduino-base64 
 #ifndef ESP32BUILD
 #include <ESP8266mDNS.h>
 
@@ -84,7 +84,7 @@ extern "C" {
 #endif
 
 #if A_SERVER==1
-#include <ESP8266WebServer.h>
+#include <ESP8266WebServer.h> // MJT: downloaded from https://github.com/esp8266/Arduino/tree/master/libraries/ESP8266WebServer
 #endif 
 
 #if GATEWAYNODE==1
@@ -112,7 +112,8 @@ WebServer server(A_SERVERPORT);
 #endif
 using namespace std;
 
-byte currentMode = 0x81;
+// byte currentMode = 0x81; // conflict 
+uint8_t currentMode = 0x81; // MJT: changed all occurencies of 'byte'
 
 //char b64[256];
 bool sx1272 = true;								// Actually we use sx1276/RFM95
@@ -320,7 +321,7 @@ void ftoa(float f, char *val, int p) {
 // ----------------------------------------------------------------------------
 int sendNtpRequest(IPAddress timeServerIP) {
 	const int NTP_PACKET_SIZE = 48;				// Fixed size of NTP record
-	byte packetBuffer[NTP_PACKET_SIZE];
+	uint8_t packetBuffer[NTP_PACKET_SIZE];
 
 	memset(packetBuffer, 0, NTP_PACKET_SIZE);	// Zeroise the buffer.
 	
@@ -360,7 +361,7 @@ time_t getNtpTime()
 	}
 	
 	const int NTP_PACKET_SIZE = 48;					// Fixed size of NTP record
-	byte packetBuffer[NTP_PACKET_SIZE];
+	uint8_t packetBuffer[NTP_PACKET_SIZE];
 	memset(packetBuffer, 0, NTP_PACKET_SIZE);		// Set buffer cntents to zero
 
     uint32_t beginWait = millis();
